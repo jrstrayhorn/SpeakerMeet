@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.156
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerMeet.Tests", "SpeakerMeet.Tests\SpeakerMeet.Tests.csproj", "{008DD60D-BF81-4B4C-AC71-D2323A552401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeakerMeet.API", "SpeakerMeet.API\SpeakerMeet.API.csproj", "{5A7CE68B-6DF7-4ACC-8E0F-84A22B6633BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{008DD60D-BF81-4B4C-AC71-D2323A552401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008DD60D-BF81-4B4C-AC71-D2323A552401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008DD60D-BF81-4B4C-AC71-D2323A552401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008DD60D-BF81-4B4C-AC71-D2323A552401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A7CE68B-6DF7-4ACC-8E0F-84A22B6633BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A7CE68B-6DF7-4ACC-8E0F-84A22B6633BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A7CE68B-6DF7-4ACC-8E0F-84A22B6633BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A7CE68B-6DF7-4ACC-8E0F-84A22B6633BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5206D980-152B-4341-B141-55EBB84939D0}
+	EndGlobalSection
+EndGlobal
