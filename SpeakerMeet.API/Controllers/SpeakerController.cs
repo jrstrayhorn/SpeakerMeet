@@ -24,7 +24,7 @@ namespace SpeakerMeet.API.Controllers
                     Name = "Jim Speaker"
                     }, 
                 new Speaker { 
-                    Name = "Joshua Smith"
+                    Name = "Joshua"
                     },
                 new Speaker
                 {

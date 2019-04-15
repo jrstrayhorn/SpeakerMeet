@@ -50,6 +50,7 @@ namespace SpeakerMeet.Tests
             // Assert
             var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
             Assert.Single(speakers);
+            Assert.Equal("Joshua", speakers[0].Name);
         }
     }
 }
