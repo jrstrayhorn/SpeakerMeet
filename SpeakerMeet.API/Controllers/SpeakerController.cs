@@ -21,21 +21,22 @@ namespace SpeakerMeet.API.Controllers
         {
             _speakers = new List<Speaker>() { 
                 new Speaker { 
-                    Name = "Jim Speaker"
+                    Name = "Jim"
                     }, 
                 new Speaker { 
-                    Name = "Joshua"
+                    Name = "Josh"
                     },
-                new Speaker
-                {
-                    Name = "Josh Martin"
-                }
+                new Speaker {
+                    Name = "Joshua"
+                    },new Speaker {
+                    Name = "Joseph"
+                    }
                 };
         }
 
         public IActionResult Search(string term)
         {
-            return new OkObjectResult(_speakers.Where(s => s.Name.Contains(term)).ToList());
+            return new OkObjectResult(_speakers.Where(s => s.Name.StartsWith(term, StringComparison.OrdinalIgnoreCase)).ToList());
         }
     }
 }
