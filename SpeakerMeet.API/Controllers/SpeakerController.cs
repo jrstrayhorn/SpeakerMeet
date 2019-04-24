@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SpeakerMeet.API.Services;
 
 namespace SpeakerMeet.API.Controllers
 {
@@ -17,7 +18,7 @@ namespace SpeakerMeet.API.Controllers
     public class SpeakerController : ControllerBase
     {
         private readonly List<Speaker> _speakers;
-        public SpeakerController()
+        public SpeakerController(ISpeakerService speakerService)
         {
             _speakers = new List<Speaker>() { 
                 new Speaker { 

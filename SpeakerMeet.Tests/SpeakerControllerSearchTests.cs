@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SpeakerMeet.API.Controllers;
+using SpeakerMeet.API.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +9,20 @@ using Xunit;
 
 namespace SpeakerMeet.Tests
 {
+    public class TestSpeakerService: ISpeakerService
+    {
+
+    }
+
     public class SpeakerControllerSearchTests
     {
         private readonly SpeakerController _controller;
 
         public SpeakerControllerSearchTests()
         {
-            _controller = new SpeakerController();
+            var testSpeakerService = new TestSpeakerService();
+
+            _controller = new SpeakerController(testSpeakerService);
         }
 
         [Fact]
@@ -95,6 +103,19 @@ namespace SpeakerMeet.Tests
             Assert.Contains(speakers, s => s.Name == "Joshua");
             Assert.Contains(speakers, s => s.Name == "Joseph");
 
+        }
+
+        [Fact]
+        public void ItAcceptsInterface()
+        {
+            // Arrange
+            ISpeakerService testSpeakerService = new TestSpeakerService();
+
+            // Act
+            var controller = new SpeakerController(testSpeakerService);
+
+            // Assert
+            Assert.NotNull(controller);
         }
     }
 }
