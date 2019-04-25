@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SpeakerMeet.API.Controllers;
+using SpeakerMeet.API.Models;
 using SpeakerMeet.API.Services;
 using System;
 using System.Collections.Generic;
@@ -9,20 +11,37 @@ using Xunit;
 
 namespace SpeakerMeet.Tests
 {
-    public class TestSpeakerService: ISpeakerService
+    public class TestSpeakerService : ISpeakerService
     {
-
+        public IEnumerable<Speaker> Search(string searchString)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class SpeakerControllerSearchTests
     {
         private readonly SpeakerController _controller;
+        private static Mock<ISpeakerService> _speakerServiceMock;
 
         public SpeakerControllerSearchTests()
         {
-            var testSpeakerService = new TestSpeakerService();
+            var speaker = new Speaker
+            {
+                Name = "test"
+            };
 
-            _controller = new SpeakerController(testSpeakerService);
+            // define the mock
+            _speakerServiceMock = new Mock<ISpeakerService>();
+
+            // when search is called, return list of speakers containing speaker
+            _speakerServiceMock.Setup(x => x.Search(It.IsAny<string>()))
+                .Returns(() => new List<Speaker> { speaker });
+
+            //var testSpeakerService = new TestSpeakerService();
+
+            //_controller = new SpeakerController(testSpeakerService);
+            _controller = new SpeakerController(_speakerServiceMock.Object);
         }
 
         [Fact]
@@ -116,6 +135,30 @@ namespace SpeakerMeet.Tests
 
             // Assert
             Assert.NotNull(controller);
+        }
+
+        [Fact]
+        public void ItCallsSearchServiceOnce()
+        {
+            // Arrange
+            // Act
+            _controller.Search("jos");
+
+            // Assert
+            _speakerServiceMock.Verify(mock => mock.Search(It.IsAny<string>()), Times.Once());
+        }
+
+        [Fact]
+        public void GivenSearchStringThenSpeakerServiceSearchCalledWithString()
+        {
+            // Arrange
+            var searchString = "jos";
+
+            // Act
+            _controller.Search(searchString);
+
+            // Assert
+            _speakerServiceMock.Verify(mock => mock.Search(searchString), Times.Once());
         }
     }
 }
