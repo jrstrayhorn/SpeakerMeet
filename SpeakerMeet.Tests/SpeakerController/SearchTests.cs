@@ -23,24 +23,22 @@ namespace SpeakerMeet.Tests
     {
         private readonly SpeakerController _controller;
         private static Mock<ISpeakerService> _speakerServiceMock;
+        private readonly List<Speaker> _speakers;
 
         public SpeakerControllerSearchTests()
         {
-            var speaker = new Speaker
+            _speakers = new List<Speaker> { new Speaker
             {
                 Name = "test"
-            };
+            }};
 
             // define the mock
             _speakerServiceMock = new Mock<ISpeakerService>();
 
             // when search is called, return list of speakers containing speaker
             _speakerServiceMock.Setup(x => x.Search(It.IsAny<string>()))
-                .Returns(() => new List<Speaker> { speaker });
+                .Returns(() => _speakers);
 
-            //var testSpeakerService = new TestSpeakerService();
-
-            //_controller = new SpeakerController(testSpeakerService);
             _controller = new SpeakerController(_speakerServiceMock.Object);
         }
 
@@ -67,62 +65,13 @@ namespace SpeakerMeet.Tests
             Assert.IsType<List<Speaker>>(result.Value);
         }
 
-        [Fact]
-        public void GivenExactMatchThenOneSpeakerInCollection()
-        {
-            // Arrange
-            // Act
-            var result = _controller.Search("Joshua") as OkObjectResult;
+        
 
-            // Assert
-            var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
-            Assert.Single(speakers);
-            Assert.Equal("Joshua", speakers[0].Name);
-        }
+        
 
-        [Theory]
-        [InlineData("Joshua")]
-        [InlineData("joshua")]
-        [InlineData("JoShUa")]
-        public void GivenCaseInsensitveMatchThenSpeakerInCollection(string searchString)
-        {
-            // Arrange
-            // Act
-            var result = _controller.Search(searchString) as OkObjectResult;
+        
 
-            // Assert
-            var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
-            Assert.Single(speakers);
-            Assert.Equal("Joshua", speakers[0].Name);
-        }
-
-        [Fact]
-        public void GivenNoMatchThenEmptyCollection()
-        {
-            // Arrange
-            // Act
-            var result = _controller.Search("ZZZ") as OkObjectResult;
-
-            // Assert
-            var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
-            Assert.Empty(speakers);
-        }
-
-        [Fact]
-        public void Given3MatchThenCollectionWith3Speakers()
-        {
-            // Arrange
-            // Act
-            var result = _controller.Search("jos") as OkObjectResult;
-
-            // Assert
-            var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
-            Assert.Equal(3, speakers.Count);
-            Assert.Contains(speakers, s => s.Name == "Josh");
-            Assert.Contains(speakers, s => s.Name == "Joshua");
-            Assert.Contains(speakers, s => s.Name == "Joseph");
-
-        }
+        
 
         [Fact]
         public void ItAcceptsInterface()
@@ -159,6 +108,21 @@ namespace SpeakerMeet.Tests
 
             // Assert
             _speakerServiceMock.Verify(mock => mock.Search(searchString), Times.Once());
+        }
+
+        [Fact(Skip="refactoring")]
+        public void GivenSpeakerServiceThenResultsReturned()
+        {
+            // Arrange
+            var searchString = "jos";
+
+            // Act
+            var result = _controller.Search(searchString) as OkObjectResult;
+
+            // Assert
+            Assert.NotNull(result);
+            var speakers = ((IEnumerable<Speaker>)result.Value).ToList();
+            Assert.Equal(_speakers, speakers);
         }
     }
 }
